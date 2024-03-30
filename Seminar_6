@@ -1,0 +1,44 @@
+/*Задание 1
+Создайте функцию, которая принимает кол-во сек и далее переводит их в кол-во дней, часов, минут, секунд.
+Пример: 123456 ->'1 days 10 hours 17 minutes 36 seconds'*/
+
+
+CREATE FUNCTION format_seconds (secs INT)
+RETURNS VARCHAR (255)
+DETERMINISTIC
+BEGIN
+   DECLARE days INT;
+   DECLARE hours INT;
+   DECLARE minutes INT;
+   DECLARE seconds INT;
+
+SET days = secs DIV (24*60*60);
+SET secs = secs MOD (24*60*60);
+
+SET hours = secs DIV (60*60);
+SET secs = secs MOD (60*60);
+
+SET minutes = secs DIV 60;
+SET seconds = secs MOD 60;
+
+RETURN CONCAT (day, 'days', hours, 'hours', minutes, 'monutes', seconds, 'seconds');
+END;
+
+/*Задание 2
+Cоздайте процедуру, которая выведет только числа, делящиеся на 15 или 33 в промежутке от 1 до 1000.
+Пример: 15,30,33,45...*/
+CREATE PROCEDURE NumbersDiv
+AS
+BEGIN
+    DECLARE @num INT = 1;
+    
+    WHILE @num <= 1000
+    BEGIN
+        IF @num % 15 = 0 OR @num % 33 = 0
+        BEGIN
+            PRINT @num;
+        END
+        
+        SET @num = @num + 1;
+    END WHILE;
+END;
